@@ -1,27 +1,33 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
-import { Box } from "@react-three/drei";
 import * as THREE from "three";
 
 function Cubes({ count }) {
   const meshRef = useRef();
   const dummy = new THREE.Object3D();
+  const cubes = useRef([]);
+
+  // count가 변경될 때만 새 큐브를 생성합니다.
+  useEffect(() => {
+    for (let i = cubes.current.length; i < count; i++) {
+      const x = Math.random() * 10 - 5;
+      const y = Math.random() * 10 - 5;
+      const z = Math.random() * 10 - 5;
+      const rotation = Math.random() * Math.PI;
+      const cube = { position: new THREE.Vector3(x, y, z), rotation };
+      cubes.current.push(cube);
+    }
+  }, [count]);
 
   useFrame((state, delta) => {
     if (meshRef.current) {
-      let i = 0;
-      while (i < count) {
-        const x = Math.random() * 10 - 5;
-        const y = Math.random() * 10 - 5;
-        const z = Math.random() * 10 - 5;
-        const rotation = Math.random() * Math.PI;
-        dummy.position.set(x, y, z);
-        dummy.rotation.set(0, 0, rotation);
-        dummy.rotateY(delta * 0.001);
+      cubes.current.forEach((cube, i) => {
+        dummy.position.copy(cube.position);
+        dummy.rotation.y = cube.rotation + delta * 0.05;
         dummy.updateMatrix();
         meshRef.current.setMatrixAt(i, dummy.matrix);
-        i++;
-      }
+        cube.rotation = dummy.rotation.y; // Update rotation for next frame
+      });
       meshRef.current.instanceMatrix.needsUpdate = true;
     }
   });
