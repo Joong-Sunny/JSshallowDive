@@ -12,7 +12,7 @@ function Cube({ position, rotationSpeed, setCalls }) {
   })
 
   return (
-    <Box ref={ref} position={position}>
+    <Box args={[0.1, 0.1, 0.1]} ref={ref} position={position} >
       <meshStandardMaterial attach="material" color="hotpink" />
     </Box>
   )
@@ -22,19 +22,28 @@ function Scene() {
   const [cubes, setCubes] = useState([])
   const [calls, setCalls] = useState(0)
 
-  const addCube = () => {
+  const addCube =  () => {
+
+    const temp = []
+
+    for (let i = 0; i < 1000 ; i++){
     const x = Math.random() * 10 - 5
     const y = Math.random() * 10 - 5
     const z = Math.random() * 10 - 5
     const position = [x, y, z]
     const rotationSpeed = Math.random() * 0.02
-    setCubes([...cubes, { position, rotationSpeed }])
+    temp.push ({ position, rotationSpeed })
+  }
+  
+  setCubes([...cubes, ...temp])
+
   }
 
   return (
     <div>
       <button onClick={addCube}>Add Cube</button>
-      <span> Draw Calls: {calls}</span>
+      <p> Draw Calls: {calls}</p>
+      <p> Cubes: {cubes.length}개</p>
       <Canvas style={{ width: "40vw", height: "50vh" }}>
         <ambientLight intensity={0.5} />
         <directionalLight color="white" position={[1, 1, 1]} />

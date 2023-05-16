@@ -38,7 +38,7 @@ function Cubes({ count, setCalls }) {
 
   return (
     <instancedMesh ref={meshRef} args={[null, null, count]}>
-      <boxBufferGeometry attach="geometry" args={[1, 1, 1]} />
+      <boxBufferGeometry attach="geometry" args={[0.1, 0.1, 0.1]} />
       <meshStandardMaterial attach="material" color={"orange"} />
     </instancedMesh>
   );
@@ -51,13 +51,14 @@ function Scene() {
 
 
   const addCube = () => {
-    setCount(count + 1);
+    setCount(count + 1000);
   };
 
   return (
     <div>
       <button onClick={addCube}>Add Cube</button>
-      <span> Draw Calls(instancedMesh): {calls}</span>
+      <p> Draw Calls(instancedMesh): {calls}</p>
+      <p> Cubes(instancedMEsh): {count}개</p>
       <Canvas style={{ width: "40vw", height: "50vh" }}>
         <ambientLight intensity={0.5} />
         <directionalLight color="white" position={[1, 1, 1]} />

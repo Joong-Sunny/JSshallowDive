@@ -1,7 +1,7 @@
 
 # Draw Call test
 
-![drawCalls]("https://github.com/Joong-Sunny/react-persist-test/assets/63194662/d9e1bce1-6c36-4fdf-9d30-a6418846643c")
+![drawCalls](https://github.com/Joong-Sunny/react-persist-test/assets/63194662/d9e1bce1-6c36-4fdf-9d30-a6418846643c){: style="max-width: 50%; height: auto;"}
 
 
 # what it tests
