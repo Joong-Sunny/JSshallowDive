@@ -1,15 +1,18 @@
 import React, { useRef, useState, useEffect } from "react";
-import { Canvas, useFrame } from "@react-three/fiber";
+import { Canvas, useFrame, useThree } from "@react-three/fiber";
+import { Stats } from '@react-three/drei'
 import * as THREE from "three";
 
-function Cubes({ count }) {
+function Cubes({ count, setCalls }) {
   const meshRef = useRef();
   const dummy = new THREE.Object3D();
   const cubes = useRef([]);
-
+  const {gl} = useThree();
+  
   // count가 변경될 때만 새 큐브를 생성합니다.
   useEffect(() => {
     for (let i = cubes.current.length; i < count; i++) {
+      console.log("useEffect작동")
       const x = Math.random() * 10 - 5;
       const y = Math.random() * 10 - 5;
       const z = Math.random() * 10 - 5;
@@ -20,10 +23,11 @@ function Cubes({ count }) {
   }, [count]);
 
   useFrame((state, delta) => {
+    setCalls(gl.info.render.calls)
     if (meshRef.current) {
       cubes.current.forEach((cube, i) => {
         dummy.position.copy(cube.position);
-        dummy.rotation.y = cube.rotation + delta * 0.05;
+        dummy.rotation.y = cube.rotation + delta * 0.5;
         dummy.updateMatrix();
         meshRef.current.setMatrixAt(i, dummy.matrix);
         cube.rotation = dummy.rotation.y; // Update rotation for next frame
@@ -42,6 +46,9 @@ function Cubes({ count }) {
 
 function Scene() {
   const [count, setCount] = useState(0);
+  const [calls, setCalls] = useState(0)
+  
+
 
   const addCube = () => {
     setCount(count + 1);
@@ -50,10 +57,12 @@ function Scene() {
   return (
     <div>
       <button onClick={addCube}>Add Cube</button>
-      <Canvas style={{ width: "100vw", height: "100vh" }}>
+      <span> Draw Calls(instancedMesh): {calls}</span>
+      <Canvas style={{ width: "40vw", height: "50vh" }}>
         <ambientLight intensity={0.5} />
         <directionalLight color="white" position={[1, 1, 1]} />
-        <Cubes count={count} />
+        <Cubes count={count} setCalls={setCalls} />
+        <Stats />
       </Canvas>
     </div>
   );

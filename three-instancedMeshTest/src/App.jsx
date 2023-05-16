@@ -3,6 +3,7 @@ import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
 import Scene from "./scene";
 import "./App.css";
+import Scene2 from './scene2';
 
 function App() {
   const [count, setCount] = useState(0);
@@ -17,8 +18,12 @@ function App() {
           <img src={reactLogo} className="logo react" alt="React logo" />
         </a>
       </div>
-      <h1>Vite + React</h1>
-      <Scene />
+      
+      <h1>Draw Call test</h1>
+      <div className='tests'>
+        <Scene />
+        <Scene2 /> 
+      </div>
     </>
   );
 }
