@@ -1,12 +1,40 @@
 import { makeObservable, observable } from "mobx";
 import * as THREE from "three";
 
+class Group {
+  group = new THREE.Group();
+
+  constructor(transform) {
+    if (transform != null) {
+      this.group.position.set(
+        transform.position.x,
+        transform.position.y,
+        transform.position.z
+      );
+      this.group.rotation.set(
+        transform.rotation.x,
+        transform.rotation.y,
+        transform.rotation.z
+      );
+      this.group.scale.set(
+        transform.scale.x,
+        transform.scale.y,
+        transform.scale.z
+      );
+    } else {
+      this.group.position.set(0, 0, 0);
+      this.group.rotation.set(0, 0, 0);
+      this.group.scale.set(1, 1, 1);
+    }
+  }
+}
+
 class MetaObject {
   groupId = "";
   type = "Object";
   name = "";
   transform = null;
-  group = new THREE.Group()
+  groupWrapper = null;
   name_check_arr = [];
   url = null;
 
@@ -21,18 +49,14 @@ class MetaObject {
     groupId
   ) {
     makeObservable(this, {
-      objectId: observable,
       groupId: observable,
       name: observable,
       transform: observable,
       group: observable,
     });
-    const tempGroup = new THREE.Group()
-    console.log("debug1", this.group)
-    this.group = tempGroup
-    console.log("debug2", this.group)
 
-    tempGroup.isRoot = true;
+    const tempGroup = new Group(transform);
+    this.group = observable(tempGroup);
     this.groupId = groupId;
     this.url = url;
     this.type = type;
@@ -41,29 +65,6 @@ class MetaObject {
       return a - b;
     });
     this.transform = transform;
-    if (transform != null) {
-      tempGroup.position.set(
-        transform.position.x,
-        transform.position.y,
-        transform.position.z
-      );
-      tempGroup.rotation.set(
-        transform.rotation.x,
-        transform.rotation.y,
-        transform.rotation.z
-      );
-      tempGroup.scale.set(
-        transform.scale.x,
-        transform.scale.y,
-        transform.scale.z
-      );
-    } else {
-      tempGroup.position.set(0, 0, 0);
-      tempGroup.rotation.set(0, 0, 0);
-      tempGroup.scale.set(1, 1, 1);
-    }
-    this.group = observable(tempGroup);
-    console.log("debug0.5", this.group)
   }
 }
 
