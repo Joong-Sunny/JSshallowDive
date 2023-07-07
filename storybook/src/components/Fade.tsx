@@ -1,13 +1,9 @@
 import React from "react";
-import styled, {css, keyframes} from 'styled-components';
+import styled, {keyframes} from 'styled-components';
 
 type Props = {
   fadeIn: boolean;
-  children: React.ReactNode;
-};
-
-type FadeProps = {
-  in: boolean;
+  children?: React.ReactNode;
 };
 
 function Fade({fadeIn, children}: Props) {
@@ -38,23 +34,6 @@ const fadeIn = keyframes`
   }
 `;
 
-const fadeOut = keyframes`
-  from {
-    opacity: 1;
-  }
-
-  to {
-    opacity: 0;
-  }
-`;
-
-const Animation = styled.div<FadeProps>`
-  ${props =>
-          props.in
-                  ? css`
-                    animation: ${fadeIn} 1s ease-in-out forwards;
-                  `
-                  : css`
-                    animation: ${fadeOut} 1s ease-in-out forwards;
-                  `}
+const Animation = styled.div`
+  animation: ${fadeIn} 1s ease-in-out forwards;
 `;

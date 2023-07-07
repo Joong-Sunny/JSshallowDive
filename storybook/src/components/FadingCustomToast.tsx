@@ -9,16 +9,12 @@ export type Props = {
   fadeOut?: boolean;
 };
 
-function FadeInToast({message, duration = 3000, fadeIn, fadeOut}: Props) {
+function FadeInToast({message, duration = 3000, fadeIn = true, fadeOut = true}: Props) {
 
   return (
-    fadeIn ? (
-      <Fade fadeIn={fadeIn}>
-        <CustomToast duration={duration} message={message} fadeOut={fadeOut} />
-      </Fade>
-    ) : (
+    <Fade fadeIn={fadeIn}>
       <CustomToast duration={duration} message={message} fadeOut={fadeOut} />
-    )
+    </Fade>
   );
 }
 
