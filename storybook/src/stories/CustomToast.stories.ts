@@ -1,5 +1,5 @@
-import { Meta, StoryObj } from '@storybook/react';
-import CustomToast  from "../components/CustomToast";
+import {Meta, StoryObj} from '@storybook/react';
+import CustomToast from "../components/CustomToast";
 
 const meta = {
   title: "Components/CustomToast",
@@ -10,25 +10,16 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-export const Default : Story = {
+export const Default: Story = {
   args: {
-  message: "토스트메시지1",
-  duration: 3000,
+    message: "토스트메시지",
   },
 };
 
-
-export const LongTimeToast : Story = {
+export const ToastWithDuration: Story = {
   args: {
-  message: "토스트메시지1",
-  duration: 30000,
+    message: "토스트메시지",
+    duration: 2000,
   },
 };
 
-
-// export const Primary: Story = {
-//   args: {
-//     primary: true,
-//     label: 'Button',
-//   },
-// };
