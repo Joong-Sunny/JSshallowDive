@@ -30,10 +30,11 @@ Default.play = async ({canvasElement}) => {
 
   await waitFor(async () => {
     await expect(await canvas.findByText("toast")).toBeInTheDocument();
-  }, {timeout: 4000});
+  });
 
 
   await waitFor(async () => {
-    expect(await canvas.findByText("toast")).not.toBeInTheDocument();
-  })
+    const toastElement = canvas.queryByText("toast");
+    expect(toastElement).not.toBeInTheDocument();
+  }, {timeout: 10000})
 }
