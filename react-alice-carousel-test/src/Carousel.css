@@ -1,0 +1,10 @@
+.smallItem {
+    padding: 2em;
+    width: 100px;
+    height: 100px;
+}
+
+.item {
+    width: 400px;
+    height: 400px;
+}
