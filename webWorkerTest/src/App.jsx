@@ -16,7 +16,19 @@ function App() {
     const worker2 = new Worker(new URL('./worker-api.js', import.meta.url));
 
     // const worker = new Worker('./worker.js', {type: 'module'});
-    worker.postMessage(400000000);
+
+    const buffer = new ArrayBuffer(1024); // 1024 바이트 크기의 버퍼
+    const view = new Uint8Array(buffer);  // 버퍼를 Uint8Array로 래핑하여 사용
+    view[0] = 8;
+    console.log(view[0], view[1])
+    console.log(buffer, view)
+
+    worker.postMessage(buffer, [buffer]);
+
+    console.log(buffer, view) //없어짐
+    view[1] = 18; //없어짐
+    console.log(view[0], view[1]) //없어짐
+
     worker.onmessage = (e) => {
       console.log("worker 에서 돌아온결과....", e.data);
     };
