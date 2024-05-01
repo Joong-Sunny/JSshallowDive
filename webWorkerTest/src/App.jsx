@@ -31,8 +31,9 @@ function App() {
   }
 
   const handleHeavyCalculationOnMain = () => {
+    console.log("무거운작업 시작")
     const result = heavyCalculation(400000000)
-    console.log(result)
+    console.log("무거운작업 끝!", result)
   }
 
 
