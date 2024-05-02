@@ -1,15 +1,38 @@
-self.onmessage = function(e) {
-  const result = heavyCalculation(e.data)
-  // const result = 2
-  self.postMessage(result)
+self.onmessage = async function(e){
+  const {image} = e.data;
+  const result = await offScreenCanvasImageResizing(image);
+  self.postMessage(result);
 }
 
-const heavyCalculation = (num) => {
-  let sum = 0
-  for (let i = 0; i <= num; i++) {
-    sum += i
-    sum *= Math.random()
-  }
-  return sum
+const offScreenCanvasImageResizing = async (image) => {
+  const imageBitmap = await createImageBitmap(image);
+  const offscreen = new OffscreenCanvas(
+    imageBitmap.width / 2,
+    imageBitmap.height / 2
+  );
+  const ctx = offscreen.getContext('2d');
+  ctx.drawImage(imageBitmap, 0, 0, offscreen.width, offscreen.height);
+
+  const resizedBlob = await offscreen.convertToBlob();
+  return await convertBlobToBase64(resizedBlob);
 }
 
+
+
+
+
+
+
+
+
+
+
+
+const convertBlobToBase64 = (blob) => {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(blob);
+    reader.onloadend = () => resolve(reader.result);
+    reader.onerror = reject;
+  });
+};

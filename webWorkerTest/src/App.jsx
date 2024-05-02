@@ -9,25 +9,21 @@ function App() {
 
   const [count, setCount] = useState(0);
 
-  const handleHeavyCalculationOnWorker = () => {
-    // console.log(new URL('./worker.js', import.meta.url))
-    // console.log(import.meta.url)
+  const handleHeavyCalculationOnWorker = async () => {
+    const response = await fetch('/rabbit.png');
+    const blob = await response.blob();
     const worker = new Worker(new URL('./worker.js', import.meta.url));
-    const worker2 = new Worker(new URL('./worker-api.js', import.meta.url));
 
-    // const worker = new Worker('./worker.js', {type: 'module'});
-    worker.postMessage(400000000);
+    const startTime = performance.now();
     worker.onmessage = (e) => {
-      console.log("worker 에서 돌아온결과....", e.data);
+      const endTime = performance.now();
+      console.log("리사이즈이미지", e.data);
+      console.log(`시간 ${endTime - startTime}ms 걸림`);
     };
-
-    worker2.postMessage(22);
-    worker2.onmessage = (e) => {
-      console.log("worker2에서 돌아온결과....", e.data);
-    }
-
-    // some additional works here
-    console.log("모든 작업 끝남")
+    worker.onerror = (err) => {
+      console.error('Worker error:', err);
+    };
+    worker.postMessage({image: blob});
   }
 
   const handleHeavyCalculationOnMain = () => {
