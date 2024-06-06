@@ -1,0 +1,18 @@
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(20px);
+  color: white;
+}
+
+.text-truncate {
+  width: 150px; /* 적당한 너비 설정 */
+  white-space: nowrap;
+  overflow: hidden;
+  /*text-overflow: ellipsis;*/
+  margin: 10px;
+}
