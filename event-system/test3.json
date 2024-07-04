@@ -1,0 +1,77 @@
+{
+  "events": [
+    {
+      "id": "event-uuid-1111",
+      "type": "onMouseDown",
+      "handlers": [
+        {
+          "decision": "decision-uuid-1111",
+          "methods":  "method-uuid-1111"
+        }
+      ]
+    },
+    {
+      "id": "event-uuid-2222",
+      "type": "onKeyDown",
+      "handlers": [
+        {
+          "decision": "decision-uuid-1111",
+          "methods":  "method-uuid-3333"
+        }
+      ]
+    }
+  ],
+  "decisions": [
+    {
+      "id": "decision-uuid-1111",
+      "type": "Vector3",
+      "condition": "==",
+      "source": {
+        "type": "Vector3",
+        "ref": {
+          "type": "Object",
+          "value": "object-uuid",
+          "property": "position"
+        }
+      },
+      "target": {
+        "type": "Vector3",
+        "ref": {
+          "type": "Const",
+          "value": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          }
+        }
+      }
+    }
+  ],
+  "methods": [
+    {
+      "id": "method-uuid-1111",
+      "type": "setObjectPosition",
+      "parameters": [
+        "debug-another-cube-uuid",
+        {
+          "x": 1,
+          "y": 0,
+          "z": 0
+        }
+      ]
+    },
+    {
+      "id": "method-uuid-2222",
+      "type": "setObjectPosition",
+      "parameters": [
+        "56adb9a0-a3b0-4cfe-8151-d6ffda12096c",
+        {
+          "x": 2,
+          "y": 0,
+          "z": 0
+        }
+      ]
+    }
+  ]
+}
+
